@@ -44,6 +44,7 @@ insurance-risk-analytics/
 │   └── modeling.py
 ├── tests/
 │   ├── __init__.py
+│   ├── test_eda_utils.py
 │   └── test_project_setup.py
 ├── .gitignore
 ├── dvc.yaml
@@ -105,6 +106,110 @@ The notebooks are organized by project phase:
 
 Reusable logic should live in `src/` so notebooks stay clean and focused on
 analysis, interpretation, and visualization.
+
+## Task 1 Methodology: Exploratory Data Analysis
+
+Task 1 focuses on understanding the ACIS insurance dataset, checking data
+quality, and identifying early risk and profitability patterns before formal
+hypothesis testing and modeling.
+
+### Dataset Loading
+
+The dataset is loaded in `notebooks/01_eda.ipynb` using
+`src.data_loader.load_insurance_data`. This helper safely reads common file
+formats such as CSV, TXT, Excel, Parquet, and JSON, then validates that the file
+exists, the format is supported, and the loaded dataset is not empty.
+
+By default, the notebook expects:
+
+```bash
+data/insurance_data.csv
+```
+
+If the dataset has a different filename or delimiter, update the `DATA_PATH`
+variable or pass the correct pandas reader options, such as `sep="|"`.
+
+### EDA Steps Performed
+
+The EDA notebook performs the following steps:
+
+- Load and preview the insurance dataset.
+- Summarize dataset shape, column types, missing cells, and duplicate rows.
+- Inspect numeric and categorical columns.
+- Review descriptive statistics for `TotalPremium`, `TotalClaims`,
+  `CustomValueEstimate`, and other numeric fields.
+- Calculate overall loss ratio and underwriting margin.
+- Add row-level risk metrics for margin and loss ratio.
+- Visualize distributions with histograms.
+- Detect potential outliers with box plots.
+- Explore numeric relationships with a correlation heatmap.
+- Compare risk and profitability by province, vehicle type, gender, car make,
+  and car model.
+
+### Loss Ratio and Margin
+
+Loss ratio measures how much of the collected premium is consumed by claims:
+
+```text
+loss ratio = total claims / total premium
+```
+
+A lower loss ratio usually indicates a more profitable or lower-risk segment.
+A high loss ratio may indicate underpricing, high claim frequency, high claim
+severity, or a segment that needs underwriting review.
+
+Margin measures the difference between premium collected and claims paid:
+
+```text
+margin = total premium - total claims
+```
+
+Positive margin suggests that premiums exceed claims. Negative margin suggests
+that claims are greater than premiums and that the segment may require pricing
+or risk-management action.
+
+### Missing Values and Outliers
+
+Missing values are summarized by count and percentage for every column. The EDA
+does not automatically drop missing records because missingness may carry
+business meaning or affect important fields such as premium, claims, location,
+vehicle attributes, or customer demographics.
+
+Outliers are identified using descriptive statistics, histograms, and box plots.
+They are not removed automatically because large claims or high-value vehicles
+may represent real insurance risk. Any outlier treatment should be justified and
+documented before modeling.
+
+### Running the Notebook
+
+Start Jupyter from the project root:
+
+```bash
+jupyter notebook
+```
+
+Then open:
+
+```text
+notebooks/01_eda.ipynb
+```
+
+Run the cells from top to bottom. If the dataset is not named
+`insurance_data.csv`, update `DATA_PATH` in the notebook before running the data
+loading cell.
+
+### Expected EDA Insights
+
+The EDA is expected to produce early evidence about:
+
+- Overall data quality and fields that need cleaning.
+- Premium, claim, and vehicle-value distributions.
+- Whether claims are concentrated among a small number of policies.
+- Overall loss ratio and margin performance.
+- Provinces with relatively high or low risk.
+- Vehicle types, makes, and models associated with higher claims.
+- Gender-level patterns that should be validated through hypothesis testing.
+- Outliers and skewed variables that may affect predictive modeling.
 
 ## Testing
 
