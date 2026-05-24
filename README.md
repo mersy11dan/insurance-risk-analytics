@@ -173,6 +173,24 @@ data/processed/insurance_data_cleaned.csv
 The exact input and output hashes are captured in `dvc.lock`, making the data
 workflow reproducible and auditable.
 
+### Verify DVC Tracking
+
+Use the verification helper to confirm that the raw data metadata, restored raw
+dataset, cleaned output, pipeline definition, and lock file all exist:
+
+```bash
+python -m src.dvc_verification
+```
+
+The script also runs:
+
+```bash
+dvc status
+```
+
+Expected output should confirm that the raw and cleaned data files exist and
+that DVC reports the data and pipeline are up to date.
+
 ### Reproduce from a Fresh Clone
 
 After cloning the repository and installing dependencies:
@@ -180,10 +198,13 @@ After cloning the repository and installing dependencies:
 ```bash
 dvc pull
 dvc repro
+python -m src.dvc_verification
 ```
 
 Use `dvc pull` to restore DVC-tracked data from the configured local remote, then
 use `dvc repro` to regenerate processed outputs from the recorded pipeline.
+Finally, run the verification script to confirm the local workspace matches the
+versioned data workflow.
 
 ## Notebooks
 
