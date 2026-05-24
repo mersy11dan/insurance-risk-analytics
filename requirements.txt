@@ -1,0 +1,17 @@
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+xgboost
+shap
+dvc
+pytest
+joblib
+scipy
+statsmodels
+openpyxl
+jupyter
+ipykernel
+black
+ruff
