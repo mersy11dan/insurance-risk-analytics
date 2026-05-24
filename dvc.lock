@@ -14,8 +14,8 @@ stages:
       size: 4139
     - path: src/data_preparation.py
       hash: md5
-      md5: f9272a71fd6dcc8ce4b9c4ab7fde3bc6
-      size: 2254
+      md5: 5c6d8384c97bd69024c86ef3b6910d1f
+      size: 4771
     outs:
     - path: data/processed/insurance_data_cleaned.csv
       hash: md5
