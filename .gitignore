@@ -1,6 +1,37 @@
-.venv/
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+ENV/
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter notebooks
 .ipynb_checkpoints/
-data/
+
+# DVC cache and runtime files
+.dvc/cache/
+.dvc/tmp/
+.dvc/rwlock
+.dvc/lock
+
+# Local data files are tracked with DVC, not Git
+data/*
+!data/.gitkeep
+
+# Local environment files
+.env
+.env.*
+
+# Editor and OS files
+.vscode/
+.idea/
 .DS_Store
+Thumbs.db
