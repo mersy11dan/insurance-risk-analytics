@@ -1,2 +1,9 @@
-# DVC pipeline stages will be added as the project workflow matures.
-stages: {}
+stages:
+  prepare_data:
+    cmd: python -m src.data_preparation --input data/raw/insurance_data.csv --output data/processed/insurance_data_cleaned.csv
+    deps:
+      - src/data_preparation.py
+      - src/data_loader.py
+      - data/raw/insurance_data.csv
+    outs:
+      - data/processed/insurance_data_cleaned.csv

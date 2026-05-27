@@ -1,0 +1,10 @@
+[tool.ruff]
+exclude = [
+    ".dvc",
+    ".git",
+    ".venv",
+    "data",
+    "notebooks",
+    "reports",
+]
+line-length = 100

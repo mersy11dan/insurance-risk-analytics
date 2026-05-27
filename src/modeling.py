@@ -291,3 +291,69 @@ def metrics_to_frame(
             }
         ]
     )
+
+
+def predict_claim_probability(model: Pipeline, X: pd.DataFrame) -> np.ndarray:
+    """Return predicted claim probabilities from a fitted classifier pipeline."""
+    if not hasattr(model, "predict_proba"):
+        raise AttributeError("The supplied model does not support predict_proba.")
+
+    probabilities = model.predict_proba(X)
+    if probabilities.shape[1] == 1:
+        return probabilities[:, 0]
+
+    return probabilities[:, 1]
+
+
+def calculate_pure_premium(
+    claim_probability: np.ndarray | pd.Series,
+    predicted_severity: np.ndarray | pd.Series,
+) -> np.ndarray:
+    """Calculate pure premium as claim probability times predicted severity."""
+    return np.asarray(claim_probability) * np.asarray(predicted_severity)
+
+
+def calculate_technical_premium(
+    pure_premium: np.ndarray | pd.Series,
+    expense_loading: float = 0.20,
+    risk_loading: float = 0.10,
+    profit_margin: float = 0.10,
+) -> np.ndarray:
+    """Add expense, risk, and profit loads to pure premium.
+
+    Loadings are expressed as proportions. For example, 0.20 means 20%.
+    """
+    total_loading = 1 + expense_loading + risk_loading + profit_margin
+    return np.asarray(pure_premium) * total_loading
+
+
+def build_pricing_frame(
+    policy_ids: pd.Series | None,
+    claim_probability: np.ndarray | pd.Series,
+    predicted_severity: np.ndarray | pd.Series,
+    expense_loading: float = 0.20,
+    risk_loading: float = 0.10,
+    profit_margin: float = 0.10,
+) -> pd.DataFrame:
+    """Build a report-ready risk-based premium table."""
+    pure_premium = calculate_pure_premium(claim_probability, predicted_severity)
+    technical_premium = calculate_technical_premium(
+        pure_premium,
+        expense_loading=expense_loading,
+        risk_loading=risk_loading,
+        profit_margin=profit_margin,
+    )
+
+    result = pd.DataFrame(
+        {
+            "claim_probability": np.asarray(claim_probability),
+            "predicted_severity": np.asarray(predicted_severity),
+            "pure_premium": pure_premium,
+            "technical_premium": technical_premium,
+        }
+    )
+
+    if policy_ids is not None:
+        result.insert(0, "policy_id", policy_ids.to_numpy())
+
+    return result

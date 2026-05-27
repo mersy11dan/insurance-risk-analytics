@@ -2,7 +2,10 @@ import pandas as pd
 
 from src.modeling import (
     build_linear_model,
+    build_pricing_frame,
     build_random_forest_model,
+    calculate_pure_premium,
+    calculate_technical_premium,
     evaluate_classification,
     metrics_to_frame,
     split_features_target,
@@ -99,3 +102,32 @@ def test_metrics_to_frame_returns_tidy_row() -> None:
     assert frame.loc[0, "model_name"] == "Linear Regression"
     assert frame.loc[0, "task_type"] == "regression"
     assert frame.loc[0, "mae"] == 1.5
+
+
+def test_premium_helpers_calculate_expected_loss_and_loaded_premium() -> None:
+    pure = calculate_pure_premium([0.1, 0.2], [1000, 2000])
+    technical = calculate_technical_premium(
+        pure,
+        expense_loading=0.2,
+        risk_loading=0.1,
+        profit_margin=0.1,
+    )
+
+    assert pure.tolist() == [100.0, 400.0]
+    assert technical.tolist() == [140.0, 560.0]
+
+
+def test_build_pricing_frame_returns_report_ready_columns() -> None:
+    frame = build_pricing_frame(
+        policy_ids=pd.Series(["A", "B"]),
+        claim_probability=[0.1, 0.2],
+        predicted_severity=[1000, 2000],
+    )
+
+    assert list(frame.columns) == [
+        "policy_id",
+        "claim_probability",
+        "predicted_severity",
+        "pure_premium",
+        "technical_premium",
+    ]

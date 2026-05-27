@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import pandas as pd
 
-
 DEFAULT_PREMIUM_COL = "TotalPremium"
 DEFAULT_CLAIMS_COL = "TotalClaims"
 DEFAULT_PROVINCE_COL = "Province"

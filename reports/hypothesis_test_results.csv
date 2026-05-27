@@ -1,0 +1,6 @@
+hypothesis,kpi,test_used,p_value,decision,business_interpretation,control_group,test_group,sample_size
+H0: There are no claim-frequency differences across provinces.,Claim Frequency,Chi-square test of independence,0.07608907812609692,Do not reject null,No statistically significant province-level claim-frequency difference was detected.,,,10000
+H0: Claim frequency is equal between Addis Ababa and Oromia.,Claim Frequency,Two-proportion z-test,0.7859116218598136,Do not reject null,Do not reject the null hypothesis. The data does not provide enough evidence of a statistically significant difference.,Addis Ababa,Oromia,6013
+H0: Average margin is equal between zip codes 10004 and 10002.,Margin,Welch's t-test,0.26423431242313866,Do not reject null,No statistically significant margin difference was detected between the selected zip codes.,10004,10002,1465
+H0: There is no claim-frequency difference between Women and Men.,Claim Frequency,Chi-square test of independence,0.9638306173980254,Do not reject null,No statistically significant gender-level claim-frequency difference was detected.,,,10000
+H0: Average margin is equal between Female and Male.,Margin,Welch's t-test,0.9846972681143139,Do not reject null,No statistically significant gender-level margin difference was detected.,Female,Male,10000

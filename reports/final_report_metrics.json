@@ -1,0 +1,15 @@
+{
+  "rows": 10000,
+  "columns": 21,
+  "missing_values": 0,
+  "duplicate_rows": 0,
+  "total_premium": 24881279.0,
+  "total_claims": 13141885.0,
+  "overall_loss_ratio": 0.5281836596904845,
+  "overall_margin": 11739394.0,
+  "severity_rows": 1535,
+  "best_model": "Random Forest",
+  "best_rmse": 5292.086967398803,
+  "best_r2": 0.2081740609476942,
+  "xgboost_available": true
+}
