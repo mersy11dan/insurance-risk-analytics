@@ -296,3 +296,35 @@ The final project should provide ACIS with clear, statistically supported
 recommendations for identifying low-risk segments, improving pricing decisions,
 and understanding the factors most strongly associated with claim risk and
 profitability.
+
+## Git Workflow and Submission
+
+The project uses task branches:
+
+- `task-1`: EDA scaffold and exploratory analysis
+- `task-2`: DVC pipeline and data preparation
+- `task-3`: Hypothesis testing
+- `task-4`: Modeling, interpretability, pricing, and final reports
+
+The complete end-to-end deliverable lives on **`task-4`**.
+
+### What to push
+
+Push the **`task-4`** branch to GitHub:
+
+```bash
+git checkout task-4
+git push -u origin task-4
+```
+
+Then open a pull request from **`task-4` → `main`** on GitHub and merge it when
+CI passes. This makes the full project visible on the default branch and counts
+toward your GitHub contribution graph.
+
+Do **not** commit raw or processed CSV files. They are tracked with DVC:
+
+```bash
+dvc push
+```
+
+Use this only if your reviewer needs access to the DVC remote storage.
