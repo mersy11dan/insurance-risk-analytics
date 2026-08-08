@@ -328,3 +328,40 @@ dvc push
 ```
 
 Use this only if your reviewer needs access to the DVC remote storage.
+
+## Portfolio Website
+
+A portfolio landing page summarizing the full project lives in `docs/index.html`.
+It covers the business problem, EDA findings, hypothesis tests, modeling results,
+SHAP interpretability, and recommendations with interactive charts and figures.
+
+### Deploy on GitHub Pages
+
+**Option A — Automatic (recommended)**
+
+1. Push the `task-4` branch (or merge into `main`).
+2. On GitHub, go to **Settings → Pages**.
+3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+4. The workflow in `.github/workflows/pages.yml` deploys the `docs/` folder automatically.
+5. Your site will be live at:
+
+```text
+https://mersy11dan.github.io/insurance-risk-analytics/
+```
+
+**Option B — Manual**
+
+1. Go to **Settings → Pages**.
+2. Set **Source** to **Deploy from a branch**.
+3. Choose branch **`task-4`** (or `main`) and folder **`/docs`**.
+4. Click **Save**.
+
+**Preview locally**
+
+Open `docs/index.html` in your browser, or run:
+
+```bash
+python -m http.server 8080 --directory docs
+```
+
+Then visit `http://localhost:8080`.
