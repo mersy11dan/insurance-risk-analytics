@@ -1,0 +1,11 @@
+feature,mean_abs_shap,feature_label,business_explanation
+numeric__RiskScore,1083.2005805170268,RiskScore,`RiskScore` is influential in the model and should be reviewed with the business team to understand its pricing and underwriting meaning.
+numeric__TotalPremium,802.8504600704018,TotalPremium,"`TotalPremium` reflects pricing or premium level. If influential, the model is using premium adequacy as a signal for expected claim severity."
+numeric__AnnualPremium,538.2651085255895,AnnualPremium,"`AnnualPremium` reflects pricing or premium level. If influential, the model is using premium adequacy as a signal for expected claim severity."
+numeric__CustomValueEstimate,389.52834738531857,CustomValueEstimate,`CustomValueEstimate` is influential in the model and should be reviewed with the business team to understand its pricing and underwriting meaning.
+numeric__ZipCode,161.1318825542701,ZipCode,"`ZipCode` captures location effects. Influence here may reflect local claim patterns, repair costs, or driving risk."
+numeric__AnnualIncome,134.53707943064614,AnnualIncome,"`AnnualIncome` captures customer profile information. Interpret this carefully alongside fairness, regulation, and other exposure differences."
+numeric__Deductible,91.33922861318732,Deductible,"`Deductible` captures policy design. Influence here may reflect coverage level, customer risk selection, or incentives to claim."
+numeric__Age,87.73235283852138,Age,"`Age` captures customer profile information. Interpret this carefully alongside fairness, regulation, and other exposure differences."
+numeric__PastClaims,74.69852032212393,PastClaims,`PastClaims` reflects prior or current claim behavior. Higher influence suggests historical claims are important for severity prediction.
+categorical__VehicleModel_RAV4,72.71050524155032,VehicleModel RAV4,"`VehicleModel RAV4` captures vehicle characteristics. Influence here may reflect repair costs, vehicle value, or risk differences by make and model."

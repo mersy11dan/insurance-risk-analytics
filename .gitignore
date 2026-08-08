@@ -10,6 +10,7 @@ ENV/
 
 # Testing and coverage
 .pytest_cache/
+.ruff_cache/
 .coverage
 htmlcov/
 
@@ -23,8 +24,14 @@ htmlcov/
 .dvc/lock
 
 # Local data files are tracked with DVC, not Git
-data/*
-!data/.gitkeep
+data/raw/*
+!data/raw/
+!data/raw/.gitkeep
+!data/raw/*.dvc
+data/processed/*
+!data/processed/
+!data/processed/.gitkeep
+!data/processed/*.dvc
 
 # Local environment files
 .env

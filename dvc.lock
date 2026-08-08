@@ -1,0 +1,23 @@
+schema: '2.0'
+stages:
+  prepare_data:
+    cmd: python -m src.data_preparation --input data/raw/insurance_data.csv 
+      --output data/processed/insurance_data_cleaned.csv
+    deps:
+    - path: data/raw/insurance_data.csv
+      hash: md5
+      md5: 1846c9c80019e93300c46191738efbe9
+      size: 1342065
+    - path: src/data_loader.py
+      hash: md5
+      md5: e1c76bd2bd6bc6a25e827bfc26efbcb8
+      size: 4135
+    - path: src/data_preparation.py
+      hash: md5
+      md5: d602368e2ccb4c0dec5d80e204dfb386
+      size: 3756
+    outs:
+    - path: data/processed/insurance_data_cleaned.csv
+      hash: md5
+      md5: 1846c9c80019e93300c46191738efbe9
+      size: 1342065

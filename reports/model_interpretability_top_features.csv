@@ -1,0 +1,11 @@
+feature,importance,business_interpretation
+RiskScore,1057.4220689457081,`RiskScore` is influential in the model and should be reviewed with the business team to understand its pricing and underwriting meaning.
+TotalPremium,779.1875062591768,"`TotalPremium` reflects pricing or premium level. If influential, the model is using premium adequacy as a signal for expected claim severity."
+AnnualPremium,603.3393342655626,"`AnnualPremium` reflects pricing or premium level. If influential, the model is using premium adequacy as a signal for expected claim severity."
+CustomValueEstimate,398.67429556077957,`CustomValueEstimate` is influential in the model and should be reviewed with the business team to understand its pricing and underwriting meaning.
+ZipCode,171.2563649706498,"`ZipCode` captures location effects. Influence here may reflect local claim patterns, repair costs, or driving risk."
+AnnualIncome,133.5799312462558,"`AnnualIncome` captures customer profile information. Interpret this carefully alongside fairness, regulation, and other exposure differences."
+Age,83.55061757241155,"`Age` captures customer profile information. Interpret this carefully alongside fairness, regulation, and other exposure differences."
+Deductible,83.45674626959429,"`Deductible` captures policy design. Influence here may reflect coverage level, customer risk selection, or incentives to claim."
+PastClaims,75.90206542462282,`PastClaims` reflects prior or current claim behavior. Higher influence suggests historical claims are important for severity prediction.
+VehicleModel RAV4,72.59170179807963,"`VehicleModel RAV4` captures vehicle characteristics. Influence here may reflect repair costs, vehicle value, or risk differences by make and model."

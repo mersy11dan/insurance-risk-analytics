@@ -10,7 +10,6 @@ import pandas as pd
 
 SUPPORTED_EXTENSIONS = {".csv", ".txt", ".xlsx", ".xls", ".parquet", ".json"}
 
-
 def load_insurance_data(file_path: str | Path, **read_kwargs: Any) -> pd.DataFrame:
     """Load an insurance dataset safely with pandas.
 

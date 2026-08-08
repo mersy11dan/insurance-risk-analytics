@@ -35,19 +35,31 @@ insurance-risk-analytics/
 │   ├── 02_hypothesis_testing.ipynb
 │   └── 03_modeling.ipynb
 ├── reports/
-│   └── final_report.md
+│   ├── interim_report.md
+│   ├── final_report.md
+│   ├── hypothesis_test_results.csv
+│   ├── model_comparison.csv
+│   ├── claim_frequency_model_metrics.csv
+│   ├── pricing_framework_sample.csv
+│   └── figures/
 ├── src/
 │   ├── __init__.py
 │   ├── data_loader.py
+│   ├── data_preparation.py
 │   ├── eda_utils.py
 │   ├── hypothesis_tests.py
-│   └── modeling.py
+│   ├── modeling.py
+│   └── model_interpretability.py
 ├── tests/
 │   ├── __init__.py
 │   ├── test_eda_utils.py
+│   ├── test_hypothesis_tests.py
+│   ├── test_modeling.py
+│   ├── test_model_interpretability.py
 │   └── test_project_setup.py
 ├── .gitignore
 ├── dvc.yaml
+├── pyproject.toml
 ├── requirements.txt
 └── README.md
 ```
@@ -77,21 +89,33 @@ pytest
 
 ## DVC
 
-Raw and processed datasets should be stored under `data/` and tracked with DVC
-instead of Git. This keeps the Git repository lightweight while preserving data
-lineage and reproducibility.
+Raw and processed datasets are stored under `data/` and tracked with DVC instead
+of Git. This keeps the Git repository lightweight while preserving data lineage
+and reproducibility.
 
-Typical DVC commands:
+Current data pipeline:
 
-```bash
-dvc init
-dvc add data/<dataset-file>
-git add data/<dataset-file>.dvc .gitignore
-git commit -m "Track insurance dataset with DVC"
+```text
+data/raw/insurance_data.csv -> data/processed/insurance_data_cleaned.csv
 ```
 
-Pipeline stages can be added to `dvc.yaml` as the project grows, for example
-data preparation, feature engineering, model training, and evaluation.
+The `prepare_data` stage is defined in `dvc.yaml` and runs:
+
+```bash
+python -m src.data_preparation --input data/raw/insurance_data.csv --output data/processed/insurance_data_cleaned.csv
+```
+
+Useful DVC commands:
+
+```bash
+dvc status
+dvc repro
+dvc push
+dvc pull
+```
+
+The current local remote is named `localstorage` and points to
+`..\acis-dvc-storage`.
 
 ## Notebooks
 
@@ -123,7 +147,7 @@ exists, the format is supported, and the loaded dataset is not empty.
 By default, the notebook expects:
 
 ```bash
-data/insurance_data.csv
+data/raw/insurance_data.csv
 ```
 
 If the dataset has a different filename or delimiter, update the `DATA_PATH`
@@ -216,11 +240,42 @@ The EDA is expected to produce early evidence about:
 Tests are stored in `tests/` and can be run locally with:
 
 ```bash
+ruff check .
 pytest
 ```
 
-GitHub Actions runs the test suite on every push and pull request using
-`.github/workflows/ci.yml`.
+GitHub Actions runs Ruff linting and the test suite on every push and pull
+request using `.github/workflows/ci.yml`.
+
+## Hypothesis Testing
+
+`notebooks/02_hypothesis_testing.ipynb` tests the required ACIS hypotheses using
+the reusable helpers in `src/hypothesis_tests.py`.
+
+The notebook covers:
+
+- Claim-frequency differences across provinces.
+- Claim-frequency differences between high-volume provinces.
+- Margin differences between high-volume zip codes.
+- Claim-frequency and margin differences by gender.
+
+Results are exported to `reports/hypothesis_test_results.csv`.
+
+## Modeling and Pricing
+
+`notebooks/03_modeling.ipynb` supports both claim severity and claim frequency:
+
+- Severity models estimate `TotalClaims` for policies with claims.
+- Frequency models estimate `P(claim)` for all policies.
+- Risk-based pricing combines both outputs:
+
+```text
+Pure Premium = P(claim) x Predicted Severity
+Technical Premium = Pure Premium + Expense Loading + Risk Load + Profit Margin
+```
+
+Modeling outputs are saved in `reports/`, including model comparison,
+claim-frequency metrics, pricing samples, and interpretability summaries.
 
 ## Report Structure
 
@@ -241,3 +296,35 @@ The final project should provide ACIS with clear, statistically supported
 recommendations for identifying low-risk segments, improving pricing decisions,
 and understanding the factors most strongly associated with claim risk and
 profitability.
+
+## Git Workflow and Submission
+
+The project uses task branches:
+
+- `task-1`: EDA scaffold and exploratory analysis
+- `task-2`: DVC pipeline and data preparation
+- `task-3`: Hypothesis testing
+- `task-4`: Modeling, interpretability, pricing, and final reports
+
+The complete end-to-end deliverable lives on **`task-4`**.
+
+### What to push
+
+Push the **`task-4`** branch to GitHub:
+
+```bash
+git checkout task-4
+git push -u origin task-4
+```
+
+Then open a pull request from **`task-4` → `main`** on GitHub and merge it when
+CI passes. This makes the full project visible on the default branch and counts
+toward your GitHub contribution graph.
+
+Do **not** commit raw or processed CSV files. They are tracked with DVC:
+
+```bash
+dvc push
+```
+
+Use this only if your reviewer needs access to the DVC remote storage.

@@ -1,0 +1,13 @@
+,0
+rows,10000
+columns,21
+missing_values,0
+duplicate_rows,0
+total_premium,24881279.0
+total_claims,13141885.0
+loss_ratio,0.5281836596904845
+margin,11739394.0
+claim_rate,0.1535
+claimed_rows,1535
+date_min,2024-01-01
+date_max,2025-06-29

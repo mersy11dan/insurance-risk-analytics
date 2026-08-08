@@ -1,0 +1,2 @@
+model_name,task_type,accuracy,precision,recall,f1,roc_auc
+Random Forest Claim Frequency,classification,0.857,0.6265060240963856,0.16938110749185667,0.26666666666666666,0.7930316632387432
